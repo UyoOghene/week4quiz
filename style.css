@@ -38,6 +38,16 @@ button{
     border-radius: 20px;
     padding: 10px;
     border: 3px solid pink ;
-    background: #73044C;
+    background: white;
     margin: 10px;
+    
+}
+button:hover {
+    background-color: gray;
+}
+.correct {
+    background-color: rgb(4, 139, 4);
+}
+.incorrect {
+    background-color: rgb(197, 59, 59);
 }
