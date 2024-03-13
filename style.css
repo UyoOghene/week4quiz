@@ -26,7 +26,7 @@ body{
     align-items: center;
     justify-content: center;
     width: 60rem;
-    height: 20rem;
+    height: 35rem;
 }
 
 .quizbox h1{
@@ -40,14 +40,90 @@ button{
     border: 3px solid pink ;
     background: white;
     margin: 10px;
+    cursor: pointer;
+    font-weight: bolder;
+    font-size: large;
     
 }
-button:hover {
+button:hover:not([diabled]) {
     background-color: gray;
 }
+
 .correct {
     background-color: rgb(4, 139, 4);
 }
 .incorrect {
     background-color: rgb(197, 59, 59);
+
 }
+#answer-buttons{
+    width: 60%;
+    display: flex;
+    flex-direction: column ;
+    justify-content: center;
+
+}
+#next {
+    background-color: rgb(19, 82, 136);
+    width: 30%;
+}
+#next:hover{
+    background-color: aliceblue;
+}
+
+.quizquestions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#presentScore{
+    background-color: aliceblue;
+    width: 20px;
+}
+
+h2{
+    background-color: antiquewhite;
+    border-radius: 20px;
+    padding: 5px;
+    border: 3px solid pink ;
+    background: white;
+
+}
+
+/* Tablets and under */
+@media (max-width:768px) {
+    .quizbox{
+        background-color:black ;
+        border: solid pink;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 18rem;
+        height: 20rem;
+    }
+
+    button{
+        padding: 3px;
+        border: 3px solid pink ;
+        margin: 3px;
+    }
+    h1{
+        font-size: 15px;
+    }
+
+    h2{
+        padding: 3px;
+        border: 2px solid pink ;
+        line-height: 1em;
+    
+    }
+    
+    
+    
+    
+      
+  }
+  /* Mobile */
+  /* @media (max-width:500px)  */

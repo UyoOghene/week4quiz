@@ -11,6 +11,8 @@ const start = document.getElementById('start');
 const answerButtons = document.getElementById('answer-buttons');
 const question = document.getElementById('question');
 const next = document.getElementById('next');
+const presentScore= document.getElementById('presentScore');
+
 
 const questions =[
     {
@@ -25,10 +27,10 @@ const questions =[
     {
         question:"Which of these has psychic abilities?",
         answers: [
-            {text: 'torchic', correct: false},
-            {text: 'cyndaquil', correct: false},
-            {text: 'golem', correct: true},
-            {text: 'totodile', correct: false},
+            {text: 'scyther', correct: false},
+            {text: 'houndoom', correct: false},
+            {text: 'kadabra', correct: true},
+            {text: 'ivysaur', correct: false},
         ]
     },
     {
@@ -108,6 +110,8 @@ const questions =[
 function startQuiz(){
     currentQuestionIndex = 0 ;
     score = 0 ;
+    presentScore.innerHTML=0;
+    
     next.innerHTML = 'next';
     showQuestion();
 }
@@ -142,8 +146,45 @@ function selectAnswer(e){
     const isCorrect = selectedBtn.dataset.correct === 'true';
     if(isCorrect){
         selectedBtn.classList.add('correct');
+        score++;
     }else{
         selectedBtn.classList.add('incorrect');
     }
+
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === 'true'){
+            button.classList.add('correct');
+        }
+        button.disabled = true;
+    }); 
+    next.style.display = 'block';
 }
+
+function showScore(){
+    resetState();
+    question.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    next.innerHTML ='play again';
+    next.style.display='block';
+}
+
+function handleNxtbtn(){
+    currentQuestionIndex++;
+    if(currentQuestionIndex < questions.length){
+        showQuestion();
+    }else{
+        showScore();
+    }
+} 
+
+
+next.addEventListener('click', ()=>{
+    presentScore.innerHTML = score; 
+    if(currentQuestionIndex < questions.length){
+        handleNxtbtn();
+    }else{
+        startQuiz();
+
+    }
+})
+
 startQuiz();
