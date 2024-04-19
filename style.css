@@ -45,7 +45,7 @@ button{
     font-size: large;
     
 }
-button:hover:not([diabled]) {
+button:hover:not([disabled]) {
     background-color: gray;
 }
 
@@ -90,6 +90,19 @@ h2{
 
 }
 
+#musictxt{
+    color: black;
+    border: 5px solid white;
+    border-radius: 20px;
+    margin: 0;
+    background-color: aliceblue;
+}
+
+.music-one{
+    display: block;
+}
+
+
 /* Tablets and under */
 @media (max-width:768px) {
     .quizbox{
@@ -121,9 +134,15 @@ h2{
     }
     
     
-    
+    #musictxt{
+        color: black;
+        border: 5px solid white;
+        border-radius: 20px;
+        margin: 0;
+        background-color: aliceblue;
+    }
     
       
-  }
+}
   /* Mobile */
   /* @media (max-width:500px)  */

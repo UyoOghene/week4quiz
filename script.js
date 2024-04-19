@@ -13,6 +13,11 @@ const question = document.getElementById('question');
 const next = document.getElementById('next');
 const presentScore= document.getElementById('presentScore');
 const timer = document.querySelector('.timer');
+const musictxt = document.querySelector('#musictxt');
+const music = document.querySelector('.music');
+const song1 = document.querySelector('#one');
+
+
 
 const questions =[
     {
@@ -117,18 +122,30 @@ function time(){
     next.style.display = 'block';
 
 }
-
-
-function startQuiz(){
-    setTimeout(time, 5000)
-
-    currentQuestionIndex = 0 ;
-    score = 0 ;
-    presentScore.innerHTML=0;
+    function startQuiz() {
+        setTimeout(time, 6000);
+        currentQuestionIndex = 0;
+        score = 0;
+        presentScore.innerHTML = 0;
+        questions.sort(() => Math.random() - 0.5);
+        const selectedQuestions = questions.slice(0, 5);
+        questions.splice(0, questions.length, ...selectedQuestions);
+        next.innerHTML = 'Next';
+        showQuestion();
+    }
     
-    next.innerHTML = 'next';
-    showQuestion();
-}
+
+
+// function startQuiz(){
+//     setTimeout(time, 8000)
+
+//     currentQuestionIndex = 0 ;
+//     score = 0 ;
+//     presentScore.innerHTML=0;
+    
+//     next.innerHTML = 'next';
+//     showQuestion();
+// }
 
 function showQuestion(){
     resetState();
@@ -150,6 +167,7 @@ currentQuestion.answers.forEach(answer => {
 next.style.display = 'none';
 
 }
+
 
 function resetState(){
     while(answerButtons.firstChild){
@@ -197,7 +215,7 @@ function handleNxtbtn(){
 next.addEventListener('click', ()=>{
     timer.innerHTML= '';
 
-    setTimeout(time, 5000)
+    setTimeout(time, 8000)
 
     presentScore.innerHTML = score; 
     if(currentQuestionIndex < questions.length){
@@ -209,3 +227,14 @@ next.addEventListener('click', ()=>{
 })
 
 startQuiz();
+
+musictxt.addEventListener('click',change)
+function change(){
+    console.log('change');
+    song1.style.display = 'none'
+    song1.pause();
+    let song2 = document.createElement("AUDIO");
+    song2.setAttribute("src","/music/Crayon-feat-Ayra-Starr-Ngozi.mp3");
+    song2.setAttribute("controls", "controls");
+    music.appendChild(song2);
+  }
