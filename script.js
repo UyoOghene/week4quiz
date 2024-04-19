@@ -12,7 +12,7 @@ const answerButtons = document.getElementById('answer-buttons');
 const question = document.getElementById('question');
 const next = document.getElementById('next');
 const presentScore= document.getElementById('presentScore');
-
+const timer = document.querySelector('.timer');
 
 const questions =[
     {
@@ -106,8 +106,22 @@ const questions =[
         ]
     }
 ]
+function time(){
+    timer.innerHTML= 'oops! Times up';
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === 'true'){
+            button.classList.add('correct');
+        }
+        button.disabled = true;
+    }); 
+    next.style.display = 'block';
+
+}
+
 
 function startQuiz(){
+    setTimeout(time, 5000)
+
     currentQuestionIndex = 0 ;
     score = 0 ;
     presentScore.innerHTML=0;
@@ -133,6 +147,8 @@ currentQuestion.answers.forEach(answer => {
     button.addEventListener('click',selectAnswer);
     
 });
+next.style.display = 'none';
+
 }
 
 function resetState(){
@@ -169,6 +185,7 @@ function showScore(){
 
 function handleNxtbtn(){
     currentQuestionIndex++;
+
     if(currentQuestionIndex < questions.length){
         showQuestion();
     }else{
@@ -178,6 +195,10 @@ function handleNxtbtn(){
 
 
 next.addEventListener('click', ()=>{
+    timer.innerHTML= '';
+
+    setTimeout(time, 5000)
+
     presentScore.innerHTML = score; 
     if(currentQuestionIndex < questions.length){
         handleNxtbtn();
