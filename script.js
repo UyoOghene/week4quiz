@@ -10,6 +10,7 @@ let currentQuestionIndex = 0;
 const start = document.getElementById('start');
 const answerButtons = document.getElementById('answer-buttons');
 const question = document.getElementById('question');
+const questionnum = document.querySelector('.question-num')
 const next = document.getElementById('next');
 const presentScore= document.getElementById('presentScore');
 const timer = document.querySelector('.timer');
@@ -111,28 +112,50 @@ const questions =[
         ]
     }
 ]
-function time(){
-    timer.innerHTML= 'oops! Times up';
-    Array.from(answerButtons.children).forEach(button => {
-        if(button.dataset.correct === 'true'){
-            button.classList.add('correct');
-        }
-        button.disabled = true;
-    }); 
-    next.style.display = 'block';
+// function time(){
 
-}
-    function startQuiz() {
-        setTimeout(time, 6000);
-        currentQuestionIndex = 0;
-        score = 0;
-        presentScore.innerHTML = 0;
-        questions.sort(() => Math.random() - 0.5);
-        const selectedQuestions = questions.slice(0, 5);
-        questions.splice(0, questions.length, ...selectedQuestions);
-        next.innerHTML = 'Next';
-        showQuestion();
+//     timer.innerHTML= 'oops! Times up';
+//     Array.from(answerButtons.children).forEach(button => {
+//         if(button.dataset.correct === 'true'){
+//             button.classList.add('correct');
+//         }
+//         button.disabled = true;
+//     }); 
+//     next.style.display = 'block';
+
+// }
+let countdown = 15; // Set the initial countdown time
+
+function time() {
+    timer.innerHTML = 'Time left:' +countdown + 's' ; // Display the countdown
+    countdown--; // Decrement the countdown
+
+    if (countdown < 0) {
+        timer.innerHTML = 'Oops! Time\'s up'; // Display "Time's up" when countdown reaches 0
+        Array.from(answerButtons.children).forEach(button => {
+            if (button.dataset.correct === 'true') {
+                button.classList.add('correct');
+            }
+            button.disabled = true;
+        });
+        next.style.display = 'block';
+    } else {
+        setTimeout(time, 1000); // Call the time() function recursively every second
     }
+}
+
+function startQuiz() {
+    countdown = 15; // Reset the countdown timer
+    time(); // Start the countdown timer
+    currentQuestionIndex = 0;
+    score = 0;
+    presentScore.innerHTML = 0;
+    questions.sort(() => Math.random() - 0.5);
+    const selectedQuestions = questions.slice(0, 5);
+    questions.splice(0, questions.length, ...selectedQuestions);
+    next.innerHTML = 'Next';
+    showQuestion();
+}
     
 
 
@@ -149,8 +172,12 @@ function time(){
 
 function showQuestion(){
     resetState();
+    countdown = 15;
+    time();
+
 let currentQuestion =questions[currentQuestionIndex];
 let questionNo = currentQuestionIndex +1;
+questionnum.innerHTML ='Question' + ' ' + questionNo + ' ' + 'out of 5 shuffled from 10';
 question.innerHTML =questionNo +'. '+ currentQuestion.question;
 
 currentQuestion.answers.forEach(answer => {
@@ -201,30 +228,30 @@ function showScore(){
     next.style.display='block';
 }
 
-function handleNxtbtn(){
+function handleNxtbtn() {
     currentQuestionIndex++;
-
-    if(currentQuestionIndex < questions.length){
+    if (currentQuestionIndex < questions.length) {
+        countdown = 15;
+        time(); // Start the countdown timer for the next question
         showQuestion();
-    }else{
+    } else {
         showScore();
     }
-} 
+}
 
+next.addEventListener('click', () => {
 
-next.addEventListener('click', ()=>{
-    timer.innerHTML= '';
-
-    setTimeout(time, 8000)
-
-    presentScore.innerHTML = score; 
-    if(currentQuestionIndex < questions.length){
+    timer.innerHTML = '';
+    time();
+    presentScore.innerHTML = score;
+    if (currentQuestionIndex < questions.length) {
         handleNxtbtn();
-    }else{
-        startQuiz();
+        time();
 
+    } else {
+        startQuiz();
     }
-})
+});
 
 startQuiz();
 

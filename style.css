@@ -76,7 +76,13 @@ button:hover:not([disabled]) {
     flex-direction: column;
     align-items: center;
 }
+.question-num{
+    background-color: antiquewhite;
+    padding: 5px;
+    margin: 0;
+}
 #presentScore{
+    margin: 0;
     background-color: aliceblue;
     width: 20px;
 }
