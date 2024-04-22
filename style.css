@@ -1,13 +1,13 @@
 body{
     margin: 0;
     padding: 0;
-    background-color:#73044C ;
+    background-color:#11153a ;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 .container{
-    background-color: #73044C ;
+    background-color:#11153a ;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -19,7 +19,7 @@ body{
 
 .quizbox{
     background-color:black ;
-    border: solid pink;
+    border: solid yellow;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -65,7 +65,7 @@ button:hover:not([disabled]) {
 }
 #next {
     background-color: rgb(19, 82, 136);
-    width: 30%;
+    width: 50%;
 }
 #next:hover{
     background-color: aliceblue;
@@ -91,7 +91,7 @@ h2{
     background-color: antiquewhite;
     border-radius: 20px;
     padding: 5px;
-    border: 3px solid pink ;
+    border: 3px solid yellow ;
     background: white;
 
 }

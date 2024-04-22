@@ -1,9 +1,3 @@
-// present Score (if i clkick on the correct button increase by 1)
-// TimeR (if timer is up , let the correct class turn green) and a h1 displays times up
-// question no (random selection when next question button is clickd)
-// question 
-// 4buttons options with a class  that one onclick will be correct
-// next question button that onclick changes the question and adds to present score
 
 let score = 0;
 let currentQuestionIndex = 0;
@@ -112,26 +106,15 @@ const questions =[
         ]
     }
 ]
-// function time(){
 
-//     timer.innerHTML= 'oops! Times up';
-//     Array.from(answerButtons.children).forEach(button => {
-//         if(button.dataset.correct === 'true'){
-//             button.classList.add('correct');
-//         }
-//         button.disabled = true;
-//     }); 
-//     next.style.display = 'block';
-
-// }
-let countdown = 15; // Set the initial countdown time
+let countdown = 15; 
+let mytimeout = setTimeout(time, 2000)
 
 function time() {
-    timer.innerHTML = 'Time left:' +countdown + 's' ; // Display the countdown
-    countdown--; // Decrement the countdown
-
+    timer.innerHTML = 'Time left:' +countdown + 's' ; 
+    countdown--; 
     if (countdown < 0) {
-        timer.innerHTML = 'Oops! Time\'s up'; // Display "Time's up" when countdown reaches 0
+        timer.innerHTML = 'Oops! Time\'s up'; 
         Array.from(answerButtons.children).forEach(button => {
             if (button.dataset.correct === 'true') {
                 button.classList.add('correct');
@@ -140,13 +123,13 @@ function time() {
         });
         next.style.display = 'block';
     } else {
-        setTimeout(time, 1000); // Call the time() function recursively every second
+        mytimeout = setTimeout(time, 2000);
     }
 }
 
 function startQuiz() {
-    countdown = 15; // Reset the countdown timer
-    time(); // Start the countdown timer
+    countdown = 15;
+    time(); 
     currentQuestionIndex = 0;
     score = 0;
     presentScore.innerHTML = 0;
@@ -155,44 +138,34 @@ function startQuiz() {
     questions.splice(0, questions.length, ...selectedQuestions);
     next.innerHTML = 'Next';
     showQuestion();
+    clearTimeout(mytimeout);
+    countdown = 15;
+    time();
 }
     
 
-
-// function startQuiz(){
-//     setTimeout(time, 8000)
-
-//     currentQuestionIndex = 0 ;
-//     score = 0 ;
-//     presentScore.innerHTML=0;
-    
-//     next.innerHTML = 'next';
-//     showQuestion();
-// }
-
 function showQuestion(){
     resetState();
+    clearTimeout(mytimeout);
     countdown = 15;
     time();
 
-let currentQuestion =questions[currentQuestionIndex];
-let questionNo = currentQuestionIndex +1;
-questionnum.innerHTML ='Question' + ' ' + questionNo + ' ' + 'out of 5 shuffled from 10';
-question.innerHTML =questionNo +'. '+ currentQuestion.question;
+    let currentQuestion =questions[currentQuestionIndex];
+    let questionNo = currentQuestionIndex +1;
+    questionnum.innerHTML ='Question' + ' ' + questionNo + ' ' + 'out of 5 shuffled from 10';
+    question.innerHTML =questionNo +'. '+ currentQuestion.question;
 
-currentQuestion.answers.forEach(answer => {
-    const button = document.createElement('button');
-    button.innerHTML = answer.text;
-    button.classList.add('btn');
-    answerButtons.appendChild(button);
-    if(answer.correct){
-        button.dataset.correct =answer.correct;
-    }
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerHTML = answer.text;
+        button.classList.add('btn');
+        answerButtons.appendChild(button);
+        if(answer.correct){
+            button.dataset.correct =answer.correct;
+        }
     button.addEventListener('click',selectAnswer);
-    
-});
-next.style.display = 'none';
-
+    });
+    next.style.display = 'none';
 }
 
 
@@ -223,6 +196,8 @@ function selectAnswer(e){
 
 function showScore(){
     resetState();
+    clearTimeout(mytimeout);
+    timer.style.display= 'none';
     question.innerHTML = `You scored ${score} out of ${questions.length}!`;
     next.innerHTML ='play again';
     next.style.display='block';
@@ -231,37 +206,45 @@ function showScore(){
 function handleNxtbtn() {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
-        countdown = 15;
-        time(); // Start the countdown timer for the next question
+        clearTimeout(mytimeout);
         showQuestion();
     } else {
+        timer.style.display= 'none';
         showScore();
+        clearTimeout(mytimeout);
     }
 }
 
-next.addEventListener('click', () => {
+next.addEventListener('click', nextQ);
 
+function nextQ(){
+    clearTimeout(mytimeout);
     timer.innerHTML = '';
-    time();
     presentScore.innerHTML = score;
     if (currentQuestionIndex < questions.length) {
         handleNxtbtn();
+        countdown=15;
         time();
 
     } else {
+        // timer.style.display= 'none';
+        clearTimeout(mytimeout);
         startQuiz();
+        clearTimeout(mytimeout);
+
+        timer.style.display='block';
+        countdown = 15;
+        time();
+    
     }
-});
+}
 
 startQuiz();
 
-musictxt.addEventListener('click',change)
-function change(){
-    console.log('change');
-    song1.style.display = 'none'
-    song1.pause();
-    let song2 = document.createElement("AUDIO");
-    song2.setAttribute("src","/music/Crayon-feat-Ayra-Starr-Ngozi.mp3");
-    song2.setAttribute("controls", "controls");
-    music.appendChild(song2);
+musictxt.addEventListener('click',changeSrc);
+
+
+  function changeSrc(){
+    console.log('src');
+    song1.setAttribute("src","./music/Crayon-feat-Ayra-Starr-Ngozi.mp3");
   }
