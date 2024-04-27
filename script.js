@@ -107,11 +107,11 @@ const questions =[
     }
 ]
 
-let countdown = 15; 
-let mytimeout = setTimeout(time, 2000)
+let countdown = 10; 
+let mytimeout = setTimeout(time, 3000)
 
 function time() {
-    timer.innerHTML = 'Time left:' +countdown + 's' ; 
+    timer.innerHTML = 'Time left:' + countdown + 's' ; 
     countdown--; 
     if (countdown < 0) {
         timer.innerHTML = 'Oops! Time\'s up'; 
@@ -123,12 +123,12 @@ function time() {
         });
         next.style.display = 'block';
     } else {
-        mytimeout = setTimeout(time, 2000);
+        mytimeout = setTimeout(time, 3000);
     }
 }
 
 function startQuiz() {
-    countdown = 15;
+    countdown = 10;
     time(); 
     currentQuestionIndex = 0;
     score = 0;
@@ -139,15 +139,16 @@ function startQuiz() {
     next.innerHTML = 'Next';
     showQuestion();
     clearTimeout(mytimeout);
-    countdown = 15;
+    countdown = 10;
     time();
 }
     
 
 function showQuestion(){
+    timer.style.display ='block';
     resetState();
     clearTimeout(mytimeout);
-    countdown = 15;
+    countdown = 10;
     time();
 
     let currentQuestion =questions[currentQuestionIndex];
@@ -162,6 +163,8 @@ function showQuestion(){
         answerButtons.appendChild(button);
         if(answer.correct){
             button.dataset.correct =answer.correct;
+            clearTimeout(mytimeout);
+
         }
     button.addEventListener('click',selectAnswer);
     });
@@ -190,7 +193,9 @@ function selectAnswer(e){
             button.classList.add('correct');
         }
         button.disabled = true;
+
     }); 
+    timer.style.display ='none';
     next.style.display = 'block';
 }
 
@@ -210,8 +215,8 @@ function handleNxtbtn() {
         showQuestion();
     } else {
         timer.style.display= 'none';
-        showScore();
         clearTimeout(mytimeout);
+        showScore();
     }
 }
 
@@ -223,7 +228,7 @@ function nextQ(){
     presentScore.innerHTML = score;
     if (currentQuestionIndex < questions.length) {
         handleNxtbtn();
-        countdown=15;
+        countdown=10;
         time();
 
     } else {
@@ -233,7 +238,7 @@ function nextQ(){
         clearTimeout(mytimeout);
 
         timer.style.display='block';
-        countdown = 15;
+        countdown = 10;
         time();
     
     }
